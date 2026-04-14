@@ -27,7 +27,6 @@ export interface Answer extends ElementCompact {
   dropdown?: AnswerType;
   checkbox?: AnswerType;
   radio?: AnswerType;
-  table?: any; // Define table structure if needed
 }
 
 export interface AnswerType extends ElementCompact {

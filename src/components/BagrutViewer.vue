@@ -1,28 +1,61 @@
 <template>
-  <div>
-    <h1>{{ bagrut.bagrut.title._text }}</h1>
-    <div v-for="question in questions" :key="question.attributes.id">
-      <p>{{ question.text._text }}</p>
-      <component
-        :is="getComponentName(question.answer)"
-        :question="question"
-        v-model="answers[question.attributes.id]"
-      />
-    </div>
-    <Button label="Check Answers" @click="checkAnswers" />
+  <div class="mx-auto p-4" style="max-width: 800px;">
+    <h1 class="text-3xl font-bold mb-4">{{ bagrut.bagrut.title._text }}</h1>
+
+    <Card
+        v-for="question in questions"
+        :key="question.attributes.id"
+        class="mb-4"
+    >
+      <template #content>
+        <p class="text-lg font-medium mb-3">{{ question.text._text }}</p>
+
+        <component
+            :is="getComponentName(question.answer)"
+            :question="question"
+            v-model="answers[question.attributes.id]"
+        />
+
+        <Message
+            v-if="results[question.attributes.id]"
+            :severity="results[question.attributes.id]?.isCorrect ? 'success' : 'error'"
+            :closable="false"
+            class="mt-3"
+        >
+          <template v-if="results[question.attributes.id]?.isCorrect">
+            Correct!
+          </template>
+          <template v-else>
+            Incorrect. Correct answer: <strong>{{ results[question.attributes.id]?.correctAnswer }}</strong>
+          </template>
+        </Message>
+      </template>
+    </Card>
+
+    <Button
+        label="Check Answers"
+        icon="pi pi-check"
+        size="large"
+        @click="checkAnswers"
+        class="mt-3"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, PropType } from 'vue';
+import { defineComponent, computed, type PropType } from 'vue';
 import Button from 'primevue/button';
+import Card from 'primevue/card';
+import Message from 'primevue/message';
+
 import Textbox from './questions/Textbox.vue';
 import Textarea from './questions/Textarea.vue';
 import Dropdown from './questions/Dropdown.vue';
 import Checkbox from './questions/Checkbox.vue';
 import Radio from './questions/Radio.vue';
-import Table from './questions/Table.vue';
-import { Bagrut, Question, Answer } from '../services/bagrutParser';
+
+import type { Bagrut, Answer } from '../services/bagrutParser';
+import { useBagrutValidator } from '../utils/bagrutValidator';
 
 export default defineComponent({
   name: 'BagrutViewer',
@@ -32,8 +65,9 @@ export default defineComponent({
     Dropdown,
     Checkbox,
     Radio,
-    Table,
     Button,
+    Card,
+    Message,
   },
   props: {
     bagrut: {
@@ -42,8 +76,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const answers = ref<Record<string, any>>({});
-
     const questions = computed(() => {
       const qs = props.bagrut.bagrut.questions.question;
       return Array.isArray(qs) ? qs : [qs];
@@ -55,52 +87,16 @@ export default defineComponent({
       if (answer.dropdown) return 'Dropdown';
       if (answer.checkbox) return 'Checkbox';
       if (answer.radio) return 'Radio';
-      if (answer.table) return 'Table';
       return null;
     };
 
-    const checkAnswers = () => {
-      for (const question of questions.value) {
-        const userAnswer = answers.value[question.attributes.id];
-        if (userAnswer && userAnswer.length > 0) {
-          const correctAnswer = getCorrectAnswer(question.answer);
-
-          if (correctAnswer === null || correctAnswer === undefined) continue;
-
-          let isCorrect = false;
-          if (question.answer.checkbox) {
-            if (Array.isArray(userAnswer) && typeof correctAnswer === 'string') {
-              const sortedUserAnswer = [...userAnswer].sort();
-              const sortedCorrectAnswer = correctAnswer ? correctAnswer.split(',').map(s => s.trim()).sort() : [];
-              isCorrect = JSON.stringify(sortedUserAnswer) === JSON.stringify(sortedCorrectAnswer);
-            }
-          } else {
-            isCorrect = JSON.stringify(userAnswer) === JSON.stringify(correctAnswer);
-          }
-
-          if (isCorrect) {
-            alert(`Question ${question.attributes.id}: Correct`);
-          } else {
-            alert(
-              `Question ${question.attributes.id}: Incorrect. Your answer: ${userAnswer}, Correct answer: ${correctAnswer}`
-            );
-          }
-        }
-      }
-    };
-
-    const getCorrectAnswer = (answer: Answer) => {
-      const key = Object.keys(answer)[0] as keyof Answer;
-      if (key && answer[key]) {
-        return answer[key]!.attributes?.correct;
-      }
-      return null;
-    };
+    const { answers, results, checkAnswers } = useBagrutValidator(questions);
 
     return {
-      answers,
       questions,
       getComponentName,
+      answers,
+      results,
       checkAnswers,
     };
   },

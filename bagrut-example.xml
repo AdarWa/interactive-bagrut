@@ -1,68 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bagrut>
-  <title>Example Bagrut in History</title>
-  <questions>
-    <question id="q1">
-      <text>In what year did the French Revolution begin?</text>
-      <answer>
-        <textbox correct="1789" />
-      </answer>
-    </question>
-    <question id="q2">
-      <text>Describe the main causes of the French Revolution in a short paragraph.</text>
-      <answer>
-        <textarea correct="A combination of social inequality, economic crisis, and Enlightenment ideas." />
-      </answer>
-    </question>
-    <question id="q3">
-      <text>Who was the King of France during the revolution?</text>
-      <answer>
-        <dropdown correct="louis_xvi">
-          <option value="louis_xiv">Louis XIV</option>
-          <option value="louis_xvi">Louis XVI</option>
-          <option value="napoleon">Napoleon Bonaparte</option>
-        </dropdown>
-      </answer>
-    </question>
-    <question id="q4">
-      <text>Which of the following were key principles of the revolution? (Select all that apply)</text>
-      <answer>
-        <checkbox correct='["liberty","equality","fraternity"]'>
-          <option value="liberty">Liberty (Liberté)</option>
-          <option value="equality">Equality (Égalité)</option>
-          <option value="fraternity">Fraternity (Fraternité)</option>
-          <option value="monarchy">Monarchy</option>
-        </checkbox>
-      </answer>
-    </question>
-    <question id="q5">
-      <text>What was the primary method of execution during the Reign of Terror?</text>
-      <answer>
-        <radio correct="guillotine">
-          <option value="firing_squad">Firing Squad</option>
-          <option value="hanging">Hanging</option>
-          <option value="guillotine">Guillotine</option>
-        </radio>
-      </answer>
-    </question>
-    <question id="q6">
-        <text>Fill in the correct year for each event.</text>
-        <answer>
-            <table>
-                <header>
-                    <cell><text>Event</text></cell>
-                    <cell><text>Year</text></cell>
-                </header>
-                <row>
-                    <cell><text>Storming of the Bastille</text></cell>
-                    <cell><textbox correct="1789" /></cell>
-                </row>
-                <row>
-                    <cell><text>Execution of Louis XVI</text></cell>
-                    <cell><textbox correct="1793" /></cell>
-                </row>
-            </table>
-        </answer>
-    </question>
-  </questions>
+    <title>Example Bagrut in History</title>
+    <questions>
+        <question id="q1">
+            <text>In what year did the French Revolution begin?</text>
+            <answer>
+                <textbox correct="1789" />
+            </answer>
+        </question>
+        <question id="q2">
+            <text>Describe the main causes of the French Revolution in a short paragraph.</text>
+            <answer>
+                <textarea correct="A combination of social inequality, economic crisis, and Enlightenment ideas." />
+            </answer>
+        </question>
+        <question id="q3">
+            <text>Who was the King of France during the revolution?</text>
+            <answer>
+                <dropdown>
+                    <option value="louis_xiv">Louis XIV</option>
+                    <option value="louis_xvi" correct="true">Louis XVI</option>
+                    <option value="napoleon">Napoleon Bonaparte</option>
+                </dropdown>
+            </answer>
+        </question>
+        <question id="q4">
+            <text>Which of the following were key principles of the revolution? (Select all that apply)</text>
+            <answer>
+                <checkbox>
+                    <option value="liberty" correct="true">Liberty (Liberté)</option>
+                    <option value="equality" correct="true">Equality (Égalité)</option>
+                    <option value="fraternity" correct="true">Fraternity (Fraternité)</option>
+                    <option value="monarchy">Monarchy</option>
+                </checkbox>
+            </answer>
+        </question>
+        <question id="q5">
+            <text>What was the primary method of execution during the Reign of Terror?</text>
+            <answer>
+                <radio>
+                    <option value="firing_squad">Firing Squad</option>
+                    <option value="hanging">Hanging</option>
+                    <option value="guillotine" correct="true">Guillotine</option>
+                </radio>
+            </answer>
+        </question>
+    </questions>
 </bagrut>

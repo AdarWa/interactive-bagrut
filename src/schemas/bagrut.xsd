@@ -31,7 +31,6 @@
       <xs:element name="dropdown" type="dropdownType"/>
       <xs:element name="checkbox" type="checkboxType"/>
       <xs:element name="radio" type="radioType"/>
-      <xs:element name="table" type="tableType"/>
     </xs:choice>
   </xs:complexType>
 
@@ -47,50 +46,27 @@
     <xs:sequence>
       <xs:element name="option" type="optionType" maxOccurs="unbounded"/>
     </xs:sequence>
-    <xs:attribute name="correct" type="xs:string" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="optionType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute name="value" type="xs:string" use="required"/>
-      </xs:extension>
-    </xs:simpleContent>
   </xs:complexType>
 
   <xs:complexType name="checkboxType">
     <xs:sequence>
       <xs:element name="option" type="optionType" maxOccurs="unbounded"/>
     </xs:sequence>
-    <xs:attribute name="correct" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="radioType">
     <xs:sequence>
       <xs:element name="option" type="optionType" maxOccurs="unbounded"/>
     </xs:sequence>
-    <xs:attribute name="correct" type="xs:string" use="required"/>
   </xs:complexType>
 
-  <xs:complexType name="tableType">
-    <xs:sequence>
-      <xs:element name="header" type="rowType"/>
-      <xs:element name="row" type="rowType" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="rowType">
-    <xs:sequence>
-      <xs:element name="cell" type="cellType" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="cellType">
-    <xs:choice>
-      <xs:element name="textbox" type="textboxType"/>
-      <xs:element name="dropdown" type="dropdownType"/>
-      <xs:element name="text" type="xs:string"/>
-    </xs:choice>
+  <xs:complexType name="optionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="value" type="xs:string" use="required"/>
+        <xs:attribute name="correct" type="xs:boolean" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
   </xs:complexType>
 
 </xs:schema>
