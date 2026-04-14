@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="bagrut">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="title" type="xs:string"/>
+        <xs:element name="questions" type="questionsType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="questionsType">
+    <xs:sequence>
+      <xs:element name="question" type="questionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="questionType">
+    <xs:sequence>
+      <xs:element name="text" type="xs:string"/>
+      <xs:element name="answer" type="answerType"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="answerType">
+    <xs:choice>
+      <xs:element name="textbox" type="textboxType"/>
+      <xs:element name="textarea" type="textareaType"/>
+      <xs:element name="dropdown" type="dropdownType"/>
+      <xs:element name="checkbox" type="checkboxType"/>
+      <xs:element name="radio" type="radioType"/>
+      <xs:element name="table" type="tableType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="textboxType">
+    <xs:attribute name="correct" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="textareaType">
+    <xs:attribute name="correct" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="dropdownType">
+    <xs:sequence>
+      <xs:element name="option" type="optionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="correct" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="optionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="value" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="checkboxType">
+    <xs:sequence>
+      <xs:element name="option" type="optionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="correct" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="radioType">
+    <xs:sequence>
+      <xs:element name="option" type="optionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="correct" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="tableType">
+    <xs:sequence>
+      <xs:element name="header" type="rowType"/>
+      <xs:element name="row" type="rowType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rowType">
+    <xs:sequence>
+      <xs:element name="cell" type="cellType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cellType">
+    <xs:choice>
+      <xs:element name="textbox" type="textboxType"/>
+      <xs:element name="dropdown" type="dropdownType"/>
+      <xs:element name="text" type="xs:string"/>
+    </xs:choice>
+  </xs:complexType>
+
+</xs:schema>
