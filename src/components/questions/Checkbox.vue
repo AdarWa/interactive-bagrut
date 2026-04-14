@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-3">
     <div v-for="option in options" :key="option.attributes.value" class="flex items-center">
       <PrimeCheckbox v-model="model" :inputId="option.attributes.value" name="category" :value="option.attributes.value" />
-      <label :for="option.attributes.value">{{ option._text }}</label>
+      <label :for="option.attributes.value" class="ml-2 cursor-pointer">{{ option._text }}</label>
     </div>
   </div>
 </template>
